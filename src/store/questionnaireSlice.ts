@@ -2,7 +2,7 @@
 
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {questions} from '../constant/question';
-import { State } from 'react-native-gesture-handler';
+import {State} from 'react-native-gesture-handler';
 
 interface Option {
   text: string;
@@ -12,8 +12,7 @@ interface Option {
 interface Answer {
   questionIndex: number;
   selectedOption: number | null;
-  score: number; // Keep track of selected option index
-  // Add other fields as needed, e.g., text: string for selected option text
+  score: number;
 }
 
 interface QuestionnaireState {
@@ -59,13 +58,14 @@ const questionnaireSlice = createSlice({
       else state.riskProfile = 'High';
     },
     // Add other reducers as needed
-    reset(state){
-        state.score = initialState.score;
-        state.riskProfile = initialState.riskProfile;
-        state.answers = [...initialState.answers];    }
+    reset(state) {
+      state.score = initialState.score;
+      state.riskProfile = initialState.riskProfile;
+      state.answers = [...initialState.answers];
+    },
   },
 });
 
-export const {setAnswer, calculateScore} = questionnaireSlice.actions;
+export const {setAnswer, calculateScore, reset} = questionnaireSlice.actions;
 
 export default questionnaireSlice.reducer;

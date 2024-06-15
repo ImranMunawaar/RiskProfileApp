@@ -7,11 +7,12 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../store';
 import {RootStackParamList} from '../navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+import {reset} from '../store/questionnaireSlice';
 
 type ResultScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,6 +24,8 @@ type Props = {
 };
 
 const ResultScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const {score, riskProfile} = useSelector(
     (state: RootState) => state.questionnaire,
   );
@@ -56,6 +59,10 @@ const ResultScreen: React.FC<Props> = ({navigation}) => {
     }
   };
 
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your Risk Profile</Text>
@@ -68,9 +75,7 @@ const ResultScreen: React.FC<Props> = ({navigation}) => {
           <Text style={styles.category}>{riskProfile}</Text>
         </LinearGradient>
       </Animated.View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.button} onPress={handleBack}>
         <Text style={styles.buttonText}>Retake Questionnaire</Text>
       </TouchableOpacity>
     </View>
@@ -148,9 +153,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#2CB562',
     paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingHorizontal: 35,
     borderRadius: 30,
-    marginVertical: 30,
+    marginVertical: 20,
   },
   buttonText: {
     color: '#fff',

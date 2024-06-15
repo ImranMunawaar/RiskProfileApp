@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAnswer, calculateScore} from '../store/questionnaireSlice';
@@ -6,6 +6,8 @@ import {RootState} from '../store';
 import {RootStackParamList} from '../navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {questions} from '../constant/question';
+import {useIsFocused} from '@react-navigation/native';
+import {reset} from '../store/questionnaireSlice';
 
 type QuestionnaireScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -19,13 +21,22 @@ type Props = {
 const QuestionnaireScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const isFocused = useIsFocused();
   const [currentSelectedOptionScore, setCurrentSelectedOptionScore] =
     useState<number>(0);
-
   const answers = useSelector(
     (state: RootState) => state.questionnaire.answers,
   );
+
   const selectedOption = answers[currentQuestion]?.selectedOption ?? null;
+
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(reset());
+      setCurrentQuestion(0);
+      setCurrentSelectedOptionScore(0);
+    }
+  }, [isFocused]);
 
   const handleNext = () => {
     if (selectedOption !== null) {
@@ -92,12 +103,14 @@ const QuestionnaireScreen: React.FC<Props> = ({navigation}) => {
             styles.button,
             {
               backgroundColor:
-                selectedOption === null ? 'lightGray' : '#2CB562',
+                selectedOption === null ? '#2CB56230' : '#2CB562',
             },
           ]}
           onPress={handleNext}
           disabled={selectedOption === null}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>
+            {questions.length - 1 === currentQuestion ? 'Done' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
