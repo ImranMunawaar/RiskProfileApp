@@ -2,12 +2,6 @@
 
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {questions} from '../constant/question';
-import {State} from 'react-native-gesture-handler';
-
-interface Option {
-  text: string;
-  score: number;
-}
 
 interface Answer {
   questionIndex: number;

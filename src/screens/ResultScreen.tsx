@@ -12,7 +12,6 @@ import {RootState} from '../store';
 import {RootStackParamList} from '../navigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
-import {reset} from '../store/questionnaireSlice';
 
 type ResultScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -46,8 +45,8 @@ const ResultScreen: React.FC<Props> = ({navigation}) => {
     outputRange: [100, 0],
   });
 
-  const getRiskProfileColor = () => {
-    switch (riskProfile) {
+  const getRiskProfileColor = (category: string) => {
+    switch (category) {
       case 'Low':
         return ['#43A047', '#2E7D32']; // Green gradient for Low risk profile
       case 'Medium':
@@ -68,7 +67,9 @@ const ResultScreen: React.FC<Props> = ({navigation}) => {
       <Text style={styles.title}>Your Risk Profile</Text>
       <Animated.View
         style={[styles.cardContainer, {transform: [{translateY}]}]}>
-        <LinearGradient colors={getRiskProfileColor()} style={styles.card}>
+        <LinearGradient
+          colors={getRiskProfileColor(riskProfile)}
+          style={styles.card}>
           <Text style={styles.scoreLabel}>Score</Text>
           <Text style={styles.score}>{score}</Text>
           <Text style={styles.categoryLabel}>Category</Text>
@@ -78,6 +79,32 @@ const ResultScreen: React.FC<Props> = ({navigation}) => {
       <TouchableOpacity style={styles.button} onPress={handleBack}>
         <Text style={styles.buttonText}>Retake Questionnaire</Text>
       </TouchableOpacity>
+
+      <View style={styles.rangesContainer}>
+        <View>
+          <View style={styles.rangeItem}>
+            <LinearGradient
+              colors={getRiskProfileColor('Low')}
+              style={styles.rangeColor}
+            />
+            <Text style={styles.rangeText}>Low: 0 - 7</Text>
+          </View>
+          <View style={styles.rangeItem}>
+            <LinearGradient
+              colors={getRiskProfileColor('Medium')}
+              style={styles.rangeColor}
+            />
+            <Text style={styles.rangeText}>Medium: 8 - 12</Text>
+          </View>
+          <View style={styles.rangeItem}>
+            <LinearGradient
+              colors={getRiskProfileColor('High')}
+              style={styles.rangeColor}
+            />
+            <Text style={styles.rangeText}>{'High: ≥ 13 '}</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -101,9 +128,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   card: {
-    width: 250,
-    height: 250,
-    borderRadius: 125, // Half of width and height to make it a circle
+    width: 200,
+    height: 200,
+    borderRadius: 100, // Half of width and height to make it a circle
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -114,7 +141,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   scoreLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 10,
@@ -123,7 +150,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   score: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -133,7 +160,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   categoryLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 10,
@@ -142,7 +169,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
   },
   category: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
@@ -152,16 +179,37 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#2CB562',
-    paddingVertical: 12,
-    paddingHorizontal: 35,
-    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 25,
     marginVertical: 20,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  rangesContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    alignItems: 'flex-end',
+  },
+  rangeItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  rangeColor: {
+    width: 15,
+    height: 15,
+    borderRadius: 7.5,
+    marginRight: 5,
+  },
+  rangeText: {
+    fontSize: 12,
+    color: '#333',
   },
 });
 
