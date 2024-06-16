@@ -25,22 +25,22 @@ export const questions = [
       {text: 'Very risk-tolerant', score: 5},
     ],
   },
-  // {
-  //   question: 'What percentage of your income are you willing to invest?',
-  //   options: [
-  //     { text: 'Less than 10%', score: 1 },
-  //     { text: '10-25%', score: 2 },
-  //     { text: '25-50%', score: 3 },
-  //     { text: 'More than 50%', score: 4 },
-  //   ],
-  // },
-  // {
-  //   question: 'How would you react to a sudden drop in the value of your investments?',
-  //   options: [
-  //     { text: 'Panic and sell immediately.', score: 1 },
-  //     { text: 'Monitor closely and consider selling', score: 2 },
-  //     { text: 'Hold and wait for recovery', score: 3 },
-  //     { text: 'See it as a buying opportunity and invest more', score: 4 },
-  //   ],
-  // },
+  {
+    question: 'What percentage of your income are you willing to invest?',
+    options: [
+      { text: 'Less than 10%', score: 1 },
+      { text: '10-25%', score: 2 },
+      { text: '25-50%', score: 3 },
+      { text: 'More than 50%', score: 4 },
+    ],
+  },
+  {
+    question: 'How would you react to a sudden drop in the value of your investments?',
+    options: [
+      { text: 'Panic and sell immediately.', score: 1 },
+      { text: 'Monitor closely and consider selling', score: 2 },
+      { text: 'Hold and wait for recovery', score: 3 },
+      { text: 'See it as a buying opportunity and invest more', score: 4 },
+    ],
+  },
 ];

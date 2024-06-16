@@ -81,7 +81,7 @@ const QuestionnaireScreen: React.FC<Props> = ({navigation}) => {
               styles.option,
               selectedOption === index && styles.selectedOption,
             ]}>
-            <Text>{item.text}</Text>
+            <Text style={styles.optionText}>{item.text}</Text>
           </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -126,7 +126,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
+    color: 'black'
   },
+  optionText:{
+    color: 'black'
+  }, 
   option: {
     padding: 10,
     backgroundColor: 'white',
